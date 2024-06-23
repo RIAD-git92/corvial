@@ -1,3 +1,68 @@
-body {
-    background-color: skyblue;
+.carousel-item {
+    height: 100%;
+    object-fit: cover;
 }
+
+.carousel-inner {
+    height: 100vh;
+    /* Utilisez la hauteur de la fenêtre si approprié pour votre design */
+    min-height: 300px;
+    /* Garantit une hauteur minimale sur les petits appareils */
+}
+
+.carousel-item img {
+    width: 100%;
+    /* Assurez-vous que la largeur est toujours de 100% */
+    height: 100%;
+    /* Hauteur ajustée à 100% du conteneur .carousel-item */
+    object-fit: cover;
+    /* Couvre le conteneur sans déformer l'image */
+    object-position: center;
+    /* Centre l'image dans son conteneur */
+}
+
+.centre {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.lien {
+    color: white;
+}
+
+
+.custom-container {
+    max-width: 500px;
+    margin-top: 10%;
+}
+
+.container {
+    margin-top: 50px;
+    max-width: 600px;
+}
+
+.form-control,
+.btn {
+    margin-bottom: 15px;
+}
+
+.btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+    transition: background-color 0.3s ease;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+    border-color: #004085;
+}
+
+.form-label {
+    font-weight: bold;
+    color: #495057;
+}
+
+.mt-4 {
+    margin-top: 1.5rem !important;
+}
+

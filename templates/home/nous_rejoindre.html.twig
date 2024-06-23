@@ -1,0 +1,53 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nous Rejoindre
+{% endblock %}
+
+{% block body %}
+	<div class="d-flex justify-content-center align-items-start min-vh-100">
+		<div class="w-100 custom-container bg-white shadow-lg rounded p-3 p-md-5">
+			<h1 class="h3 mb-4 text-center text-primary">Nous Rejoindre</h1>
+			<p class="mb-4 text-center text-secondary">Pour rejoindre notre équipe dynamique et innovante, envoyez votre candidature via le formulaire ci-dessous.</p>
+
+			{% for message in app.flashes('success') %}
+				<div class="alert alert-success mt-4 flash-message">
+					{{ message }}
+				</div>
+			{% endfor %}
+
+			<form method="post" action="{{ path('apply_spontaneous') }}" enctype="multipart/form-data">
+				<div class="mb-3">
+					<label for="email" class="form-label">Email</label>
+					<input type="email" class="form-control" id="email" name="email" value="{{ userEmail }}" required>
+				</div>
+				<div class="mb-3">
+					<label for="formFileCV" class="form-label">CV</label>
+					<input class="form-control" id="formFileCV" type="file" name="cv" required/>
+				</div>
+				<div class="mb-3">
+					<label for="formFileMotivation" class="form-label">Lettre de motivation</label>
+					<input class="form-control" id="formFileMotivation" type="file" name="letter" required/>
+				</div>
+				<button type="submit" class="btn btn-primary w-100">
+					Envoyer
+				</button>
+			</form>
+		</div>
+	</div>
+
+	<script>
+		// Fonction pour faire disparaître les messages flash après 5 secondes
+document.addEventListener('DOMContentLoaded', function () {
+setTimeout(function () {
+const flashMessages = document.querySelectorAll('.flash-message');
+flashMessages.forEach(function (message) {
+message.style.transition = 'opacity 0.5s ease-out';
+message.style.opacity = '0';
+setTimeout(function () {
+message.remove();
+}, 500); // Attendre que l'animation soit terminée avant de supprimer l'élément
+});
+}, 5000); // 5000 millisecondes = 5 secondes
+});
+	</script>
+{% endblock %}

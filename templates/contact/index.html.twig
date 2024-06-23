@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}SimpleJob - Contact
+{% endblock %}
+
+
+{% block body %}
+	<div class="container">
+		{% for message in app.flashes('success') %}
+			<div class='alert alert-success mt-4'>
+				{{message}}
+			</div>
+		{% endfor %}
+		<h1 class='centre'>Formulaire de contact</h1>
+		<div class="form-container">
+			{{ form_start(form) }}
+			<div class="form-group">
+				{{ form_label(form.full_name) }}
+				{{ form_widget(form.full_name, {'attr': {'class': 'form-control'}}) }}
+				{{ form_errors(form.full_name) }}
+			</div>
+			<div class="form-group">
+				{{ form_label(form.email) }}
+				{{ form_widget(form.email, {'attr': {'class': 'form-control'}}) }}
+				{{ form_errors(form.email) }}
+			</div>
+			<div class="form-group">
+				{{ form_label(form.subject) }}
+				{{ form_widget(form.subject, {'attr': {'class': 'form-control'}}) }}
+				{{ form_errors(form.subject) }}
+			</div>
+			<div class="form-group">
+				{{ form_label(form.message) }}
+				{{ form_widget(form.message, {'attr': {'class': 'form-control', 'rows': 4}}) }}
+				{{ form_errors(form.message) }}
+			</div>
+			<div class="form-group">
+				{{ form_widget(form.submit, {'attr': {'class': 'btn btn-primary'}}) }}
+			</div>
+			{{ form_end(form) }}
+		</div>
+	</div>
+{% endblock %}

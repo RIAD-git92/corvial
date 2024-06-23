@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}S'inscrire{% endblock %}
+
+{% block body %}
+    <div class="container mt-5">
+        <h1 class="mb-4">S'inscrire</h1>
+
+        {{ form_errors(registrationForm) }}
+
+        {{ form_start(registrationForm, {'attr': {'class': 'needs-validation', 'novalidate': 'novalidate'}}) }}
+
+        <div class="mb-3">
+            {{ form_row(registrationForm.fullName, {'attr': {'class': 'form-control'}, 'label': 'Nom complet'}) }}
+        </div>
+        <div class="mb-3">
+            {{ form_row(registrationForm.email, {'attr': {'class': 'form-control'}, 'label': 'Adresse email'}) }}
+        </div>
+        <div class="mb-3">
+            {{ form_row(registrationForm.plainPassword, {
+                'label': 'Mot de passe',
+                'attr': {'class': 'form-control'}
+            }) }}
+        </div>
+        <div class="mb-3 form-check">
+            {{ form_row(registrationForm.agreeTerms, {'attr': {'class': 'form-check-input'}}) }}
+            <label class="form-check-label" for="{{ registrationForm.agreeTerms.vars.id }}">
+                Accepter les conditions d'utilisation
+            </label>
+        </div>
+
+        <button type="submit" class="btn btn-primary">S'inscrire</button>
+        <a href="{{ path('app_login') }}" class="btn btn-secondary">Se connecter</a>
+
+        {{ form_end(registrationForm) }}
+    </div>
+{% endblock %}
