@@ -35,7 +35,7 @@ class UserCrudController extends AbstractCrudController
                 ->setFormTypeOption('disabled', 'disabled'),
             ArrayField::new('roles')
                 ->hideOnIndex(),
-            DateTimeField::new('createAt')
+            DateTimeField::new('createdAt')
         ];
     }
 
