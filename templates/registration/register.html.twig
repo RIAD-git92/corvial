@@ -3,35 +3,59 @@
 {% block title %}S'inscrire{% endblock %}
 
 {% block body %}
-    <div class="container mt-5">
-        <h1 class="mb-4">S'inscrire</h1>
+<section class="vh-100 gradient-custom">
+  <div class="container py-5 h-100">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+        <div class="card bg-dark text-white" style="border-radius: 1rem;">
+          <div class="card-body p-5 text-center">
 
-        {{ form_errors(registrationForm) }}
+            <div class="mb-md-5 mt-md-4 pb-5">
 
-        {{ form_start(registrationForm, {'attr': {'class': 'needs-validation', 'novalidate': 'novalidate'}}) }}
+              <h2 class="fw-bold mb-2 text-uppercase">S'inscrire</h2>
+              <p class="text-white-50 mb-5">Veuillez entrer vos informations pour créer un compte !</p>
 
-        <div class="mb-3">
-            {{ form_row(registrationForm.fullName, {'attr': {'class': 'form-control'}, 'label': 'Nom complet'}) }}
+              {{ form_errors(registrationForm) }}
+
+              {{ form_start(registrationForm, {'attr': {'class': 'needs-validation', 'novalidate': 'novalidate'}}) }}
+
+              <div class="form-outline form-white mb-4">
+                {{ form_row(registrationForm.fullName, {'attr': {'class': 'form-control form-control-lg'}, 'label': 'Nom complet:'}) }}
+              </div>
+
+              <div class="form-outline form-white mb-4">
+                {{ form_row(registrationForm.email, {'attr': {'class': 'form-control form-control-lg'}, 'label': 'Adresse email:'}) }}
+              </div>
+
+              <div class="form-outline form-white mb-4">
+                {{ form_row(registrationForm.plainPassword, {
+                    'label': 'Mot de passe:',
+                    'attr': {'class': 'form-control form-control-lg'}
+                }) }}
+              </div>
+
+              <div class="form-check mb-3">
+                {{ form_row(registrationForm.agreeTerms, {'attr': {'class': 'form-check-input'}}) }}
+                <label class="form-check-label" for="{{ registrationForm.agreeTerms.vars.id }}">
+                  Accepter les conditions d'utilisation
+                </label>
+              </div>
+
+              <button type="submit" class="btn btn-outline-light btn-lg px-5">S'inscrire</button>
+              <a href="{{ path('app_login') }}" class="btn btn-outline-secondary btn-lg px-5">Se connecter</a>
+
+              {{ form_end(registrationForm) }}
+
+            </div>
+
+            <div>
+              <p class="mb-0">Déjà inscrit(e) ? <a href="{{ path('app_login') }}" class="text-white-50 fw-bold">Se connecter</a></p>
+            </div>
+
+          </div>
         </div>
-        <div class="mb-3">
-            {{ form_row(registrationForm.email, {'attr': {'class': 'form-control'}, 'label': 'Adresse email'}) }}
-        </div>
-        <div class="mb-3">
-            {{ form_row(registrationForm.plainPassword, {
-                'label': 'Mot de passe',
-                'attr': {'class': 'form-control'}
-            }) }}
-        </div>
-        <div class="mb-3 form-check">
-            {{ form_row(registrationForm.agreeTerms, {'attr': {'class': 'form-check-input'}}) }}
-            <label class="form-check-label" for="{{ registrationForm.agreeTerms.vars.id }}">
-                Accepter les conditions d'utilisation
-            </label>
-        </div>
-
-        <button type="submit" class="btn btn-primary">S'inscrire</button>
-        <a href="{{ path('app_login') }}" class="btn btn-secondary">Se connecter</a>
-
-        {{ form_end(registrationForm) }}
+      </div>
     </div>
+  </div>
+</section>
 {% endblock %}
