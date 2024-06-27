@@ -26,6 +26,14 @@ class ContactType extends AbstractType
                 'label' => 'Nom / Prénom',
                 'label_attr' => [
                     'class' => 'form-label mt-4'
+                ],
+                'constraints' => [
+                    new Assert\NotBlank(),
+                    new Assert\Length(['min' => 2, 'max' => 50]),
+                    new Assert\Regex([
+                        'pattern' => '/^[a-zA-Z\s]+$/',
+                        'message' => 'Le nom ne peut contenir que des lettres et des espaces.',
+                    ]),
                 ]
             ])
             ->add('email', EmailType::class, [
@@ -55,6 +63,7 @@ class ContactType extends AbstractType
                     'class' => 'form-label mt-4'
                 ],
                 'constraints' => [
+                    new Assert\NotBlank(),
                     new Assert\Length(['min' => 2, 'max' => 100])
                 ]
             ])
@@ -68,7 +77,12 @@ class ContactType extends AbstractType
                     'class' => 'form-label mt-4'
                 ],
                 'constraints' => [
-                    new Assert\NotBlank()
+                    new Assert\NotBlank(),
+                    new Assert\Length(['min' => 10]),
+                    new Assert\Regex([
+                        'pattern' => '/^[^<>]+$/',
+                        'message' => 'Le message ne peut pas contenir de balises HTML.',
+                    ]),
                 ]
             ])
             ->add('submit', SubmitType::class, [
@@ -83,6 +97,9 @@ class ContactType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Contact::class,
+            'csrf_protection' => true,
+            'csrf_field_name' => '_token',
+            'csrf_token_id'   => 'contact_item',
         ]);
     }
 }

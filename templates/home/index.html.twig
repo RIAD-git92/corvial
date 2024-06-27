@@ -52,11 +52,11 @@
                         {% for offre in offres %}
                             <tr>
                                 <td>
-                                    <strong>{{ offre.titre }}</strong>
+                                    <strong>{{ offre.titre | e }}</strong>
                                 </td>
-                                <td>{{ offre.entreprise.nom }}</td>
-                                <td>{{ offre.description | slice(0, 1000) }}</td>
-                                <td>{{ offre.salaire }}€</td>
+                                <td>{{ offre.entreprise.nom | e }}</td>
+                                <td>{{ offre.description | slice(0, 1000) | e }}</td>
+                                <td>{{ offre.salaire | e }}€</td>
                                 <td>
                                     <!-- Bouton pour ouvrir le formulaire de candidature -->
                                     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#applyModal{{ offre.id }}">
@@ -68,14 +68,14 @@
                                         <div class="modal-dialog">
                                             <div class="modal-content">
                                                 <div class="modal-header">
-                                                    <h5 class="modal-title" id="applyModalLabel{{ offre.id }}">Postuler à : {{ offre.titre }}</h5>
+                                                    <h5 class="modal-title" id="applyModalLabel{{ offre.id }}">Postuler à : {{ offre.titre | e }}</h5>
                                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                 </div>
                                                 <div class="modal-body">
                                                     <form method="post" action="{{ path('apply_to_offer', {'id': offre.id}) }}" enctype="multipart/form-data">
                                                         <div class="mb-3">
                                                             <label for="email{{ offre.id }}" class="form-label">Email</label>
-                                                            <input type="email" class="form-control" id="email{{ offre.id }}" name="email" value="{{ userEmail }}" required>
+                                                            <input type="email" class="form-control" id="email{{ offre.id }}" name="email" value="{{ userEmail | e }}" required>
                                                         </div>
                                                         <div class="mb-3">
                                                             <label for="cvFile{{ offre.id }}" class="form-label">CV (PDF)</label>
@@ -86,7 +86,7 @@
                                                             <input type="file" class="form-control" id="letterFile{{ offre.id }}" name="letter" required>
                                                         </div>
                                                         <div class="modal-footer">
-                                                            <button type="submit" class="btn btn-success">Envoyer</button>
+                                                            <button type="submit" class="btn btn-primary">Envoyer</button>
                                                         </div>
                                                     </form>
                                                 </div>

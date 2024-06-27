@@ -9,12 +9,16 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Email;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 class ContactController extends AbstractController
 {
     #[Route('/contact', name: 'app_contact')]
-    public function index(Request $request, EntityManagerInterface $manager): Response
+    public function index(Request $request, EntityManagerInterface $manager, MailerInterface $mailer): Response
     {
+
         $contact = new Contact();
 
         if ($this->getUser()) {
@@ -30,9 +34,18 @@ class ContactController extends AbstractController
             $manager->persist($contact);
             $manager->flush();
 
+            // Envoi de l'email
+            $email = (new Email())
+                ->from($contact->getEmail())
+                ->to('admin@Simplejob.com')
+                ->subject($contact->getSubject())
+                ->html($contact->getMessage());
+
+            $mailer->send($email);
+
             $this->addFlash(
                 'success',
-                'Votre demande a été envoyé avec succés!'
+                'Votre demande a été envoyée avec succès!'
             );
 
             return $this->redirectToRoute('app_contact');

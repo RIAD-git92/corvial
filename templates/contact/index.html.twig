@@ -3,12 +3,11 @@
 {% block title %}SimpleJob - Contact
 {% endblock %}
 
-
 {% block body %}
 	<div class="container">
 		{% for message in app.flashes('success') %}
-			<div class='alert alert-success mt-4'>
-				{{message}}
+			<div class='alert alert-success mt-4 flash-message'>
+				{{ message | e }}
 			</div>
 		{% endfor %}
 		<h1 class='centre'>Formulaire de contact</h1>
@@ -40,4 +39,19 @@
 			{{ form_end(form) }}
 		</div>
 	</div>
+	<script>
+		// Fonction pour faire disparaître les messages flash après 5 secondes
+document.addEventListener('DOMContentLoaded', function () {
+setTimeout(function () {
+const flashMessages = document.querySelectorAll('.flash-message');
+flashMessages.forEach(function (message) {
+message.style.transition = 'opacity 0.5s ease-out';
+message.style.opacity = '0';
+setTimeout(function () {
+message.remove();
+}, 500); // Attendre que l'animation soit terminée avant de supprimer l'élément
+});
+}, 5000); // 5000 millisecondes = 5 secondes
+});
+	</script>
 {% endblock %}
