@@ -16,6 +16,7 @@ class MainController extends AbstractController
     public function index(OffreEmploiRepository $offreEmploiRepository): Response
     {
         $offres = $offreEmploiRepository->findAll();
+        // dd($offres);
 
         // Récupérer l'email de l'utilisateur connecté
         $userEmail = $this->getUser() ? $this->getUser()->getEmail() : null;

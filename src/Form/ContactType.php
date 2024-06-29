@@ -64,7 +64,11 @@ class ContactType extends AbstractType
                 ],
                 'constraints' => [
                     new Assert\NotBlank(),
-                    new Assert\Length(['min' => 2, 'max' => 100])
+                    new Assert\Length(['min' => 2, 'max' => 100]),
+                    new Assert\Regex([
+                        'pattern' => '/^[^<>]+$/',
+                        'message' => 'Le message ne peut pas contenir de balises HTML.',
+                    ]),
                 ]
             ])
             ->add('message', TextareaType::class, [
@@ -99,7 +103,7 @@ class ContactType extends AbstractType
             'data_class' => Contact::class,
             'csrf_protection' => true,
             'csrf_field_name' => '_token',
-            'csrf_token_id'   => 'contact_item',
+            'csrf_token_id' => 'contact_item',
         ]);
     }
 }

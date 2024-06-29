@@ -5,12 +5,18 @@ namespace App\Entity;
 use App\Repository\OffreEmploiRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: OffreEmploiRepository::class)]
 class OffreEmploi
 {
+    const CONTRAT_CDI = 'CDI';
+    const CONTRAT_CDD = 'CDD';
+    const CONTRAT_INTERIM = 'Interim';
+    const CONTRAT_STAGE = 'Stage';
+    const CONTRAT_ALTERNANCE = 'Alternance';
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -19,7 +25,7 @@ class OffreEmploi
     #[ORM\Column(length: 255)]
     private ?string $titre = null;
 
-    #[ORM\Column(type: Types::TEXT)]
+    #[ORM\Column(type: 'text')]
     private ?string $description = null;
 
     #[ORM\Column]
@@ -28,16 +34,16 @@ class OffreEmploi
     #[ORM\ManyToOne(inversedBy: 'offres')]
     private ?Entreprise $entreprise = null;
 
-    /**
-     * @var Collection<int, Competence>
-     */
     #[ORM\ManyToMany(targetEntity: Competence::class, inversedBy: 'offreEmplois')]
+    #[ORM\JoinTable(name: 'offre_competence')]
     private Collection $competences;
 
-    /**
-     * @var Collection<int, Candidature>
-     */
-    #[ORM\OneToMany(targetEntity: Candidature::class, mappedBy: 'offreEmploi')]
+    #[ORM\Column(length: 50)]
+    #[Assert\NotBlank]
+    #[Assert\Choice(choices: [self::CONTRAT_CDI, self::CONTRAT_CDD, self::CONTRAT_INTERIM, self::CONTRAT_STAGE, self::CONTRAT_ALTERNANCE])]
+    private ?string $contrat = null;
+
+    #[ORM\OneToMany(mappedBy: 'offreEmploi', targetEntity: Candidature::class, cascade: ['remove'], orphanRemoval: true)]
     private Collection $candidatures;
 
     public function __construct()
@@ -45,10 +51,7 @@ class OffreEmploi
         $this->competences = new ArrayCollection();
         $this->candidatures = new ArrayCollection();
     }
-    public function __toString(): string
-    {
-        return $this->titre;
-    }
+
     public function getId(): ?int
     {
         return $this->id;
@@ -59,10 +62,9 @@ class OffreEmploi
         return $this->titre;
     }
 
-    public function setTitre(string $titre): static
+    public function setTitre(string $titre): self
     {
         $this->titre = $titre;
-
         return $this;
     }
 
@@ -71,10 +73,9 @@ class OffreEmploi
         return $this->description;
     }
 
-    public function setDescription(string $description): static
+    public function setDescription(string $description): self
     {
         $this->description = $description;
-
         return $this;
     }
 
@@ -83,10 +84,9 @@ class OffreEmploi
         return $this->salaire;
     }
 
-    public function setSalaire(float $salaire): static
+    public function setSalaire(float $salaire): self
     {
         $this->salaire = $salaire;
-
         return $this;
     }
 
@@ -95,56 +95,66 @@ class OffreEmploi
         return $this->entreprise;
     }
 
-    public function setEntreprise(?Entreprise $entreprise): static
+    public function setEntreprise(?Entreprise $entreprise): self
     {
         $this->entreprise = $entreprise;
-
         return $this;
     }
 
     /**
-     * @return Collection<int, Competence>
+     * @return Collection|Competence[]
      */
     public function getCompetences(): Collection
     {
         return $this->competences;
     }
 
-    public function addCompetence(Competence $competence): static
+    public function addCompetence(Competence $competence): self
     {
         if (!$this->competences->contains($competence)) {
-            $this->competences->add($competence);
+            $this->competences[] = $competence;
         }
-
         return $this;
     }
 
-    public function removeCompetence(Competence $competence): static
+    public function removeCompetence(Competence $competence): self
     {
         $this->competences->removeElement($competence);
+        return $this;
+    }
 
+    public function getContrat(): ?string
+    {
+        return $this->contrat;
+    }
+
+    public function setContrat(string $contrat): self
+    {
+        if (!in_array($contrat, [self::CONTRAT_CDI, self::CONTRAT_CDD, self::CONTRAT_INTERIM, self::CONTRAT_STAGE, self::CONTRAT_ALTERNANCE])) {
+            throw new \InvalidArgumentException("Invalid contract type");
+        }
+        $this->contrat = $contrat;
         return $this;
     }
 
     /**
-     * @return Collection<int, Candidature>
+     * @return Collection|Candidature[]
      */
     public function getCandidatures(): Collection
     {
         return $this->candidatures;
     }
 
-    public function addCandidature(Candidature $candidature): static
+    public function addCandidature(Candidature $candidature): self
     {
         if (!$this->candidatures->contains($candidature)) {
-            $this->candidatures->add($candidature);
+            $this->candidatures[] = $candidature;
             $candidature->setOffreEmploi($this);
         }
-
         return $this;
     }
 
-    public function removeCandidature(Candidature $candidature): static
+    public function removeCandidature(Candidature $candidature): self
     {
         if ($this->candidatures->removeElement($candidature)) {
             // set the owning side to null (unless already changed)
@@ -152,7 +162,11 @@ class OffreEmploi
                 $candidature->setOffreEmploi(null);
             }
         }
-
         return $this;
+    }
+
+    public function __toString(): string
+    {
+        return $this->titre ?? '';
     }
 }

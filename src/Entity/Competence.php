@@ -39,10 +39,9 @@ class Competence
         return $this->nom;
     }
 
-    public function setNom(string $nom): static
+    public function setNom(string $nom): self
     {
         $this->nom = $nom;
-
         return $this;
     }
 
@@ -54,22 +53,27 @@ class Competence
         return $this->offreEmplois;
     }
 
-    public function addOffreEmploi(OffreEmploi $offreEmploi): static
+    public function addOffreEmploi(OffreEmploi $offreEmploi): self
     {
         if (!$this->offreEmplois->contains($offreEmploi)) {
-            $this->offreEmplois->add($offreEmploi);
+            $this->offreEmplois[] = $offreEmploi;
             $offreEmploi->addCompetence($this);
         }
 
         return $this;
     }
 
-    public function removeOffreEmploi(OffreEmploi $offreEmploi): static
+    public function removeOffreEmploi(OffreEmploi $offreEmploi): self
     {
         if ($this->offreEmplois->removeElement($offreEmploi)) {
             $offreEmploi->removeCompetence($this);
         }
 
         return $this;
+    }
+
+    public function __toString(): string
+    {
+        return $this->nom ?? '';
     }
 }
