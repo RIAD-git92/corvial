@@ -3,3 +3,12 @@ controllers:
         path: ../src/Controller/
         namespace: App\Controller
     type: attribute
+
+set_cookie:
+    path: /set-cookie
+    controller: App\Controller\CookieController::setCookie
+
+get_cookie:
+    path: /get-cookie
+    controller: App\Controller\CookieController::getCookie
+   
