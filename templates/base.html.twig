@@ -1,145 +1,156 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <meta charset="UTF-8">
-    <title>{% block title %}Welcome!{% endblock %}</title>
-    <link href="https://fonts.googleapis.com/css2?family=Reem+Kufi:wght@400..700&display=swap" rel="stylesheet">
-    <link rel="icon" type="image/x-icon" href="{{ asset('styles/img/favicon.ico') }}">
-    {% block stylesheets %}
-        <link rel="stylesheet" href="{{ asset('build/tailwind.css') }}">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha384-jLKHWM+26O7iQ+LU/5JZT6e7BCsTSHOnRvcib/7rsbQ7I5zLp+M/+OuhTGzG6z1A" crossorigin="anonymous">
-        <link rel="stylesheet" href="{{ asset('styles/app.css') }}">
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    {% endblock %}
-</head>
-<body class="text-white" style="background: radial-gradient(circle, #00121C 42.62%, #013954 100%);">
-    <div class="d-flex flex-column justify-content-between min-vh-100">
-        <div>
-            <!-- Navbar -->
-            <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-                <div class="container-fluid">
-                    <a class="navbar-brand" href="/">
-                        <img src="{{ asset('styles/img/simple-.png') }}" alt="logo" style="height: 110px;">
-                    </a>
-                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                    {% if app.user %}
-                        {% if is_granted('ROLE_ADMIN') %}
-                            <li class="nav-item">
-                                <a href="{{ path('admin.index') }}" class="btn btn-primary">Dashboard</a>
-                            </li>
-                        {% endif %}
-                        <div class="collapse navbar-collapse" id="navbarNav">
-                            <ul class="navbar-nav ms-auto">
-                                <li class="nav-item">
-                                    <a class="nav-link active" aria-current="page" href="/">Home</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="/nous-rejoindre">Candidature Spontanée</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ path('app_contact') }}">Contact</a>
-                                </li>
-                            </ul>
-                            <button type="button" class="btn btn-danger rounded-pill px-4 py-2 text-white shadow transition">
-                                <a href="{{ path('app_logout') }}" class="text-white text-decoration-none">Déconnexion</a>
-                            </button>
-                        {% else %}
-                            <button class="btn btn-success rounded-pill px-4 py-2 text-white shadow transition">
-                                <a href="{{ path('app_login') }}" class="text-white text-decoration-none">Connexion</a>
-                            </button>
-                        {% endif %}
-                    </div>
-                </div>
-            </nav>
-            {% block body %}{% endblock %}
-        </div>
-        <footer class="background: radial-gradient(circle, #00121C 42.62%, #013954 100%);">
-            <div class="container px-6 pt-6">
-                <div class="mb-6 d-flex justify-content-center gap-2">
-                    <a href="#!" class="rounded-circle bg-primary p-3 text-white shadow transition" style="background-color: #3b5998;">
-                        <i class="fab fa-facebook-f"></i>
-                    </a>
-                    <a href="#!" class="rounded-circle bg-info p-3 text-white shadow transition" style="background-color: #55acee;">
-                        <i class="fab fa-twitter"></i>
-                    </a>
-                    <a href="#!" class="rounded-circle bg-danger p-3 text-white shadow transition" style="background-color: #dd4b39;">
-                        <i class="fab fa-google"></i>
-                    </a>
-                    <a href="#!" class="rounded-circle bg-purple p-3 text-white shadow transition" style="background-color: #ac2bac;">
-                        <i class="fab fa-instagram"></i>
-                    </a>
-                    <a href="#!" class="rounded-circle bg-info p-3 text-white shadow transition" style="background-color: #0082ca;">
-                        <i class="fab fa-linkedin"></i>
-                    </a>
-                    <a href="#!" class="rounded-circle bg-dark p-3 text-white shadow transition" style="background-color: #333333;">
-                        <i class="fab fa-github"></i>
-                    </a>
-                </div>
-            </div>
-            <div class="w-100 bg-dark p-4 text-center text-white">
-                © 2024 Copyright:
-                <a href="https://riad-safi.netlify.app/" class="text-reset fw-bold">Riad Safi</a>
-            </div>
-        </footer>
+	<head>
+		<meta charset="UTF-8">
+		<title>
+			{% block title %}Welcome!
+			{% endblock %}
+		</title>
+		<link href="https://fonts.googleapis.com/css2?family=Reem+Kufi:wght@400..700&display=swap" rel="stylesheet">
+		<link rel="icon" type="image/x-icon" href="{{ asset('styles/img/favicon.ico') }}">
+		{% block stylesheets %}
+			<link rel="stylesheet" href="{{ asset('build/tailwind.css') }}">
+			<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+			<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha384-jLKHWM+26O7iQ+LU/5JZT6e7BCsTSHOnRvcib/7rsbQ7I5zLp+M/+OuhTGzG6z1A" crossorigin="anonymous">
+			<link rel="stylesheet" href="{{ asset('styles/app.css') }}">
+			<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+		{% endblock %}
+	</head>
+	<body class="text-white" style="background: radial-gradient(circle, #00121C 42.62%, #013954 100%);">
+		<div class="d-flex flex-column justify-content-between min-vh-100">
+			<div>
+				<!-- Navbar -->
+				<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+					<div class="container-fluid">
+						<a class="navbar-brand" href="/">
+							<img src="{{ asset('styles/img/simple-.png') }}" alt="logo" style="height: 110px;">
+						</a>
+						<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+							<span class="navbar-toggler-icon"></span>
+						</button>
+						{% if app.user %}
+							{% if is_granted('ROLE_ADMIN') %}
+								<li class="nav-item">
+									<a href="{{ path('admin.index') }}" class="btn btn-primary">Dashboard</a>
+								</li>
+							{% endif %}
+							<div class="collapse navbar-collapse" id="navbarNav">
+								<ul class="navbar-nav ms-auto">
+									<li class="nav-item">
+										<a class="nav-link active" aria-current="page" href="/">Home</a>
+									</li>
+									<li class="nav-item">
+										<a class="nav-link" href="/nous-rejoindre">Candidature Spontanée</a>
+									</li>
+									<li class="nav-item">
+										<a class="nav-link" href="{{ path('app_contact') }}">Contact</a>
+									</li>
+								</ul>
+								<button type="button" class="btn btn-danger rounded-pill px-4 py-2 text-white shadow transition">
+									<a href="{{ path('app_logout') }}" class="text-white text-decoration-none">Déconnexion</a>
+								</button>
+							{% else %}
+								<button class="btn btn-success rounded-pill px-4 py-2 text-white shadow transition">
+									<a href="{{ path('app_login') }}" class="text-white text-decoration-none">Connexion</a>
+								</button>
+							{% endif %}
+						</div>
+					</div>
+				</nav>
+				{% block body %}{% endblock %}
+			</div>
+			<footer class="background: radial-gradient(circle, #00121C 42.62%, #013954 100%);">
+				<div class="container px-6 pt-6">
+					<div class="mb-6 d-flex justify-content-center gap-2">
+						<a href="#!" class="rounded-circle bg-primary p-3 text-white shadow transition" style="background-color: #3b5998;">
+							<i class="fab fa-facebook-f"></i>
+						</a>
+						<a href="#!" class="rounded-circle bg-info p-3 text-white shadow transition" style="background-color: #55acee;">
+							<i class="fab fa-twitter"></i>
+						</a>
+						<a href="#!" class="rounded-circle bg-danger p-3 text-white shadow transition" style="background-color: #dd4b39;">
+							<i class="fab fa-google"></i>
+						</a>
+						<a href="#!" class="rounded-circle bg-purple p-3 text-white shadow transition" style="background-color: #ac2bac;">
+							<i class="fab fa-instagram"></i>
+						</a>
+						<a href="#!" class="rounded-circle bg-info p-3 text-white shadow transition" style="background-color: #0082ca;">
+							<i class="fab fa-linkedin"></i>
+						</a>
+						<a href="#!" class="rounded-circle bg-dark p-3 text-white shadow transition" style="background-color: #333333;">
+							<i class="fab fa-github"></i>
+						</a>
+					</div>
+				</div>
+				<div class="w-100 bg-dark p-4 text-center text-white">
+					© 2024 Copyright:
+					<a href="https://riad-safi.netlify.app/" class="text-reset fw-bold">Riad Safi</a>
+				</div>
+			</footer>
 
-        <!-- Modal de consentement aux cookies -->
-        <div class="modal fade" id="cookieConsentModal" tabindex="-1" aria-labelledby="cookieConsentModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="cookieConsentModalLabel">Consentement aux cookies</h5>
-                        <span class="continue-link" id="continueWithoutAccepting">Continuer sans accepter</span>
-                    </div>
-                    <div class="modal-body">
-                        <h4>Ce site utilise des cookies pour améliorer votre expérience. En cliquant sur "Accepter", vous consentez à l'utilisation de tous les cookies. <i class="fa-solid fa-bolt"></i></h4>
-                        <p>Les cookies nous permettent de sauvegarder vos préférences de navigation en toute sécurité, ils nous permettent aussi de mieux vous connaître pour vous offrir le meilleur des services !</p>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-danger" id="declineCookies">Refuser</button>
-                        <button type="button" class="btn btn-primary" id="acceptCookies">Accepter</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- FontAwesome JS -->
-        <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
-    </div>
-    {% block javascripts %}
-        <script src="{{ asset('js/inactivityLogout.js') }}"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-        <script>
-            // Effacer le cookie de consentement aux cookies pour les tests
-            document.cookie = "cookie_consent=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+			<!-- Modal de consentement aux cookies -->
+			<div class="modal fade" id="cookieConsentModal" tabindex="-1" aria-labelledby="cookieConsentModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+				<div class="modal-dialog modal-dialog-centered">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title" id="cookieConsentModalLabel">Consentement aux cookies</h5>
+							<span class="continue-link" id="continueWithoutAccepting">Continuer sans accepter</span>
+						</div>
+						<div class="modal-body">
+							<h4>Ce site utilise des cookies pour améliorer votre expérience. En cliquant sur "Accepter", vous consentez à l'utilisation de tous les cookies.
+								<i class="fa-solid fa-bolt"></i>
+							</h4>
+							<p>Les cookies nous permettent de sauvegarder vos préférences de navigation en toute sécurité, ils nous permettent aussi de mieux vous connaître pour vous offrir le meilleur des services !</p>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-danger" id="declineCookies">Refuser</button>
+							<button type="button" class="btn btn-primary" id="acceptCookies">Accepter</button>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- FontAwesome JS -->
+			<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+		</div>
+		{% block javascripts %}
+			<script src="{{ asset('js/inactivityLogout.js') }}"></script>
+			<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+			<script>
+				// Effacer le cookie de consentement aux cookies pour les tests
+document.cookie = "cookie_consent=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
 
-            // Affiche la modal de consentement aux cookies si le consentement n'a pas été donné
-            document.addEventListener('DOMContentLoaded', function () {
-                if (!document.cookie.split('; ').find(row => row.startsWith('cookie_consent'))) {
-                    var cookieModal = new bootstrap.Modal(document.getElementById('cookieConsentModal'));
-                    cookieModal.show();
-                }
+// Affiche la modal de consentement aux cookies si le consentement n'a pas été donné
+document.addEventListener('DOMContentLoaded', function () {
+if (!document.cookie.split('; ').find(row => row.startsWith('cookie_consent'))) {
+const cookieModal = new bootstrap.Modal(document.getElementById('cookieConsentModal'));
+cookieModal.show();
+}
 
-                document.getElementById('acceptCookies').addEventListener('click', function () {
-                    document.cookie = "cookie_consent=accepted; path=/; max-age=" + (60 * 60 * 24 * 365);
-                    var cookieModal = bootstrap.Modal.getInstance(document.getElementById('cookieConsentModal'));
-                    cookieModal.hide();
-                });
+document.getElementById('acceptCookies').addEventListener('click', function () {
+document.cookie = "cookie_consent=accepted; path=/; max-age=" + (
+60 * 60 * 24 * 365
+);
+const cookieModal = bootstrap.Modal.getInstance(document.getElementById('cookieConsentModal'));
+cookieModal.hide();
+});
 
-                document.getElementById('declineCookies').addEventListener('click', function () {
-                    document.cookie = "cookie_consent=declined; path=/; max-age=" + (60 * 60 * 24 * 365);
-                    var cookieModal = bootstrap.Modal.getInstance(document.getElementById('cookieConsentModal'));
-                    cookieModal.hide();
-                });
+document.getElementById('declineCookies').addEventListener('click', function () {
+document.cookie = "cookie_consent=declined; path=/; max-age=" + (
+60 * 60 * 24 * 365
+);
+const cookieModal = bootstrap.Modal.getInstance(document.getElementById('cookieConsentModal'));
+cookieModal.hide();
+});
 
-                document.getElementById('continueWithoutAccepting').addEventListener('click', function () {
-                    document.cookie = "cookie_consent=continued_without_accepting; path=/; max-age=" + (60 * 60 * 24 * 365);
-                    var cookieModal = bootstrap.Modal.getInstance(document.getElementById('cookieConsentModal'));
-                    cookieModal.hide();
-                });
-            });
-        </script>
-    {% endblock %}
-</body>
+document.getElementById('continueWithoutAccepting').addEventListener('click', function () {
+document.cookie = "cookie_consent=continued_without_accepting; path=/; max-age=" + (
+60 * 60 * 24 * 365
+);
+const cookieModal = bootstrap.Modal.getInstance(document.getElementById('cookieConsentModal'));
+cookieModal.hide();
+});
+});
+			</script>
+		{% endblock %}
+	</body>
 </html>
