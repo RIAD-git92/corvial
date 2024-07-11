@@ -3,42 +3,53 @@
 {% block title %}S'inscrire{% endblock %}
 
 {% block body %}
-<section class="vh-100 gradient-custom">
-  <div class="container py-5 h-100">
-    <div class="row d-flex justify-content-center align-items-center h-100">
+<section class="min-vh-100 gradient-custom d-flex align-items-center justify-content-center">
+  <div class="container custom-container">
+    <div class="row d-flex justify-content-center">
       <div class="col-12 col-md-8 col-lg-6 col-xl-5">
         <div class="card bg-dark text-white" style="border-radius: 1rem;">
           <div class="card-body p-5 text-center">
-
             <div class="mb-md-5 mt-md-4 pb-5">
-
               <h2 class="fw-bold mb-2 text-uppercase">S'inscrire</h2>
               <p class="text-white-50 mb-5">Veuillez entrer vos informations pour créer un compte !</p>
 
-              {{ form_errors(registrationForm) }}
-
-              {{ form_start(registrationForm, {'attr': {'class': 'needs-validation', 'novalidate': 'novalidate'}}) }}
+              {{ form_start(registrationForm, {'attr': {'class': 'signup-form', 'novalidate': 'novalidate'}}) }}
 
               <div class="form-outline form-white mb-4">
-                {{ form_row(registrationForm.fullName, {'attr': {'class': 'form-control form-control-lg'}, 'label': 'Nom complet:'}) }}
+                {{ form_row(registrationForm.fullName, {'attr': {'class': 'form-control form-control-lg', 'id': 'fullName'}, 'label': 'Nom complet:'}) }}
+                <div class="invalid-feedback">Le nom complet est requis.</div>
               </div>
 
               <div class="form-outline form-white mb-4">
-                {{ form_row(registrationForm.email, {'attr': {'class': 'form-control form-control-lg'}, 'label': 'Adresse email:'}) }}
+                {{ form_row(registrationForm.email, {'attr': {'class': 'form-control form-control-lg', 'id': 'email'}, 'label': 'Adresse email:'}) }}
+                <div class="invalid-feedback">Veuillez entrer une adresse email valide.</div>
               </div>
 
               <div class="form-outline form-white mb-4">
-                {{ form_row(registrationForm.plainPassword, {
+                {{ form_row(registrationForm.plainPassword.first, {
                     'label': 'Mot de passe:',
-                    'attr': {'class': 'form-control form-control-lg'}
+                    'attr': {'class': 'form-control form-control-lg', 'id': 'password'}
                 }) }}
+                <div class="invalid-feedback">Le mot de passe est requis.</div>
+                <div class="power-container">
+                  <div id="power-point" style="height: 0.75rem; width: 1%; background-color: grey; border-radius: 3rem; transition: all 0.375s;"></div>
+                </div>
+              </div>
+
+              <div class="form-outline form-white mb-4">
+                {{ form_row(registrationForm.plainPassword.second, {
+                    'label': 'Confirmer le mot de passe:',
+                    'attr': {'class': 'form-control form-control-lg', 'id': 'confirm-password'}
+                }) }}
+                <div class="invalid-feedback">Les mots de passe ne correspondent pas.</div>
               </div>
 
               <div class="form-check mb-3">
-                {{ form_row(registrationForm.agreeTerms, {'attr': {'class': 'form-check-input'}}) }}
-                <label class="form-check-label" for="{{ registrationForm.agreeTerms.vars.id }}">
+                {{ form_row(registrationForm.agreeTerms, {'attr': {'class': 'form-check-input', 'id': 'agreeTerms'}}) }}
+                <label class="form-check-label" for="agreeTerms">
                   Accepter les conditions d'utilisation
                 </label>
+                <div class="invalid-feedback">Vous devez accepter les conditions d'utilisation.</div>
               </div>
 
               <button type="submit" class="btn btn-outline-light btn-lg px-5">S'inscrire</button>
@@ -58,4 +69,5 @@
     </div>
   </div>
 </section>
+<script src="{{ asset('js/register.js') }}" defer></script>
 {% endblock %}

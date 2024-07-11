@@ -5,6 +5,7 @@ use App\Entity\Candidature;
 use App\Entity\OffreEmploi;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\OffreEmploiRepository;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -13,16 +14,21 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class MainController extends AbstractController
 {
     #[Route('/', name: 'home')]
-    public function index(OffreEmploiRepository $offreEmploiRepository): Response
+    public function index(OffreEmploiRepository $offreEmploiRepository, PaginatorInterface $paginator, Request $request): Response
     {
-        $offres = $offreEmploiRepository->findAll();
-        // dd($offres);
+        $queryBuilder = $offreEmploiRepository->createQueryBuilder('o');
+
+        $pagination = $paginator->paginate(
+            $queryBuilder, /* query NOT result */
+            $request->query->getInt('page', 1), /*page number*/
+            5 /*limit per page*/
+        );
 
         // Récupérer l'email de l'utilisateur connecté
         $userEmail = $this->getUser() ? $this->getUser()->getEmail() : null;
 
         return $this->render('home/index.html.twig', [
-            'offres' => $offres,
+            'pagination' => $pagination,
             'userEmail' => $userEmail,
         ]);
     }

@@ -46,6 +46,9 @@ class OffreEmploi
     #[ORM\OneToMany(mappedBy: 'offreEmploi', targetEntity: Candidature::class, cascade: ['remove'], orphanRemoval: true)]
     private Collection $candidatures;
 
+    #[ORM\Column(type: 'datetime')]
+    private ?\DateTimeInterface $date = null;
+
     public function __construct()
     {
         $this->competences = new ArrayCollection();
@@ -162,6 +165,17 @@ class OffreEmploi
                 $candidature->setOffreEmploi(null);
             }
         }
+        return $this;
+    }
+
+    public function getDate(): ?\DateTimeInterface
+    {
+        return $this->date;
+    }
+
+    public function setDate(\DateTimeInterface $date): self
+    {
+        $this->date = $date;
         return $this;
     }
 

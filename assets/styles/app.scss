@@ -1,0 +1,243 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Reem Kufi', sans-serif;
+}
+
+.navbar {
+  margin-bottom: 0;
+}
+
+.carousel {
+  width: 100%;
+  height: 65vh;
+  overflow: hidden;
+  position: relative;
+  margin-top: 0;
+
+  .carousel-item {
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+    transition: opacity 0.5s ease-in-out;
+    
+        &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.3); // Ajustez l'opacité ici
+        z-index: 1;
+    }
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .carousel-caption {
+        margin: 0 10px;       
+        color: #fff;
+        border: none;
+        border-radius: 30%;
+        font-size: 1.5rem;
+        padding: 0 10px;
+        cursor: pointer;
+        z-index: 10;
+    }
+  }
+}
+
+@media (max-width: 1200px) {
+  .carousel {
+    height: 50vh;
+  }
+}
+
+@media (max-width: 992px) {
+  .carousel {
+    height: 40vh;
+  }
+}
+
+@media (max-width: 768px) {
+  .carousel {
+    height: 30vh;
+  }
+}
+
+.scroll-to-top {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    display: none;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 50%;
+    font-size: 18px;
+    cursor: pointer;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+    z-index: 1000;
+}
+
+.centre {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.lien {
+    color: white;
+}
+
+.form-control,
+.btn {
+    margin-bottom: 15px;
+}
+
+.btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+    transition: background-color 0.3s ease;
+
+    &:hover {
+        background-color: #0056b3;
+        border-color: #004085;
+    }
+}
+
+.form-label {
+    font-weight: bold;
+    color: #495057;
+}
+
+.mt-4 {
+    margin-top: 1.5rem !important;
+}
+
+.modal-content {
+    color: black;
+    font-family: 'Reem Kufi', sans-serif;
+}
+
+.btn-danger,
+.btn-primary {
+    transition: background-color 0.3s ease;
+
+    &:hover {
+        &.btn-danger {
+            background-color: #c82333;
+            border-color: #bd2130;
+        }
+
+        &.btn-primary {
+            background-color: #0056b3;
+            border-color: #004085;
+        }
+    }
+}
+
+.modal-backdrop.show {
+    opacity: 0.8;
+}
+
+.continue-link {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 0.875rem;
+    color: #007bff;
+    cursor: pointer;
+    text-decoration: underline;
+
+    &:hover {
+        color: #0056b3;
+    }
+}
+
+.power-container {
+    background: #4b2e4d;
+    width: 100%;
+    height: 0.75rem;
+    border-radius: 3rem;
+
+    #power-point {
+        background: #e5484d;
+        min-width: 0.75rem;
+        width: 1%;
+        height: 100%;
+        border-radius: 3rem;
+        transition: all 0.375s;
+    }
+}
+
+.text-warning {
+    color: #ffc107;
+    /* Assurez-vous que cette couleur correspond à celle utilisée dans le tableau */
+}
+
+.title-btp {
+    color: #ffc107;
+    /* Même couleur que le texte du tableau */
+    font-weight: bold;
+    text-transform: uppercase;
+    position: relative;
+    margin-bottom: 2rem;
+
+    &::after {
+        content: '';
+        display: block;
+        width: 80px;
+        height: 5px;
+        background-color: #ffc107;
+        /* Même couleur que le texte du tableau */
+        margin: 0.5rem auto 0;
+    }
+}
+
+.btp-icon {
+    margin-right: 10px;
+    vertical-align: middle;
+    color: #ffc107;
+    /* Même couleur que le texte du tableau */
+}
+
+.table-responsive {
+    margin-top: 20px;
+}
+
+.table-hover tbody tr:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.table thead th {
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+.alert {
+    margin-top: 20px;
+    border-radius: 10px;
+    text-align: center;
+    font-weight: bold;
+}
+
+#noResultsMessage {
+    display: none;
+    padding: 10px;
+    margin-top: 10px;
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.page-nous-rejoindre {
+    background: radial-gradient(circle, #00121C 42.62%, #013954 100%);
+}
